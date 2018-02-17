@@ -50,7 +50,7 @@ class StaffMember {
     constructor(name, role, dateOfBirth) {
         this.name = name;
         this.role = role;
-        this.dateOfBirth = dateOfBirth;
+        this.dateOfBirth = new Date(dateOfBirth);
         this.movies = [];
     }
 
@@ -67,23 +67,23 @@ class StaffMember {
     }
 
     getAge() {
-        let now = new Date();
-        let age = now.getFullYear() - this.dateOfBirth;
+        const now = new Date();
+        const age = now.getFullYear() - this.dateOfBirth.getFullYear();
         return age;
     }
 }
 
-const myMovie = new Movie('The Matrix', new StaffMember('Lana Wachowski', 'director', 1965));
-
-const firstActor = new StaffMember('Keanu Reeves', 'star', 1964);
+const myMovie = new Movie('The Matrix', new StaffMember('Lana Wachowski', 'director', '6-21-1965'));
+//my computer date format is: mm-dd-year
+const firstActor = new StaffMember('Keanu Reeves', 'star', '9-2-1964');
 myMovie.addStar(firstActor);
-const secondActor = new StaffMember('Laurence Fishburne', 'star', 1961);
+const secondActor = new StaffMember('Laurence Fishburne', 'star', '7-30-1961');
 myMovie.addStar(secondActor);
-const actress = new StaffMember('Carrie-Anne Moss', 'star', 1967);
+const actress = new StaffMember('Carrie-Anne Moss', 'star', '8-21-1967');
 myMovie.addStar(actress);
-const firstWriter = new StaffMember('Lilly Wachowski', 'writer', 1967);
+const firstWriter = new StaffMember('Lilly Wachowski', 'writer', '12-29-1967');
 myMovie.addWriter(firstWriter);
-const secondWriter = new StaffMember('Lana Wachowski', 'writer', 1965);
+const secondWriter = new StaffMember('Lana Wachowski', 'writer', '6-21-1965');
 myMovie.addWriter(secondWriter);
 
 myMovie.addRating(10.0);
@@ -101,6 +101,6 @@ console.log(myMovie.getStars().map(actor => `${actor.getName()} ${actor.getAge()
 
 const director = myMovie.getDirector();
 
-console.log(`Director: ${director.getName()}`);
+console.log(`Director: ${director.getName()} ${director.getAge()}`);
 
-console.log(`${myMovie.getTitle()} movie has scored an average of: ${(myMovie.getAverageRating()).toFixed(1)} scores on IMDB.`);
+console.log(`${myMovie.getTitle()} movie has scored an average of: ${(myMovie.getAverageRating()).toFixed(1)} scores both on IMDB and from the six votes from myside!`);
