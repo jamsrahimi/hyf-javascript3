@@ -1,81 +1,106 @@
 'use strict'
 
-//Complete the following code:
-
 class Movie {
     constructor(title, director) {
-        // add your code here
+        //assigning each constructor method to 'this' pointing to an empty object/array for now
+        this.title = title;
+        this.director = director;
+        //create empty arrays before the functions.
+        this.stars = [];
+        this.writers = [];
+        this.ratings = [];
     }
 
     getTitle() {
-        // add your code here
+        return this.title;
     }
 
+    //when these 2 functions are called,it should return title and director from the virtual array 'this'!
     getDirector() {
-        // add your code here
+        return this.director;
     }
 
     addStar(star) {
-        // add your code here
+        this.stars.push(star);
+        //once add functions called, we start filling in the empty arrays earlier created
     }
 
     getStars() {
-        // add your code here
+        return this.stars;
     }
 
     addWriter(writer) {
-        // add your code here
+        this.writers.push(writer);
     }
 
     getWriters() {
-        // add your code here
+        return this.writer;
     }
 
     addRating(rating) {
-        // add your code here
+        this.ratings.push(rating);
     }
 
     getAverageRating() {
-        // add your code here
+        return this.ratings.reduce(function (p, c) { return p + c; }) / this.ratings.length;
     }
-
-    // ... Add yours :-) Look to IMDB for inspiration
 }
 
 class StaffMember {
     constructor(name, role, dateOfBirth) {
-        // add your code here
+        this.name = name;
+        this.role = role;
+        this.dateOfBirth = dateOfBirth;
+        this.movies = [];
     }
 
     addMovie(movie) {
-        // add your code here
+        this.movies.push(movie);
     }
 
     getName() {
-        // add your code here
+        return this.name;
     }
 
     getRole() {
-        // add your code here
+        return this.role;
     }
 
     getAge() {
-        // add your code here
+        let now = new Date();
+        let age = now.getFullYear() - this.dateOfBirth;
+        return age;
     }
 }
 
-// Pick your favorite movie from http://www.imdb.com/
+const myMovie = new Movie('The Matrix', new StaffMember('Lana Wachowski', 'director', 1965));
 
-const myMovie = new Movie(...);
-
-const firstActor = new StaffMember(...);
+const firstActor = new StaffMember('Keanu Reeves', 'star', 1964);
 myMovie.addStar(firstActor);
-// create and add more staff members
+const secondActor = new StaffMember('Laurence Fishburne', 'star', 1961);
+myMovie.addStar(secondActor);
+const actress = new StaffMember('Carrie-Anne Moss', 'star', 1967);
+myMovie.addStar(actress);
+const firstWriter = new StaffMember('Lilly Wachowski', 'writer', 1967);
+myMovie.addWriter(firstWriter);
+const secondWriter = new StaffMember('Lana Wachowski', 'writer', 1965);
+myMovie.addWriter(secondWriter);
 
-// Make sure that the following actions work.
+myMovie.addRating(10.0);
+myMovie.addRating(9.0);
+myMovie.addRating(8.0);
+myMovie.addRating(7.0);
+myMovie.addRating(9.0);
+myMovie.addRating(9.2);
+
+myMovie.getAverageRating();
+
+console.log(myMovie.getTitle());
+
 console.log(myMovie.getStars().map(actor => `${actor.getName()} ${actor.getAge()}`));
-const director = myMovie.getDirector();
-console.log(`Director: ${director.map(director => `${director.getName()}`)}`);
 
-//Fun extra step: If you get bored, template them and make a page by rendering the results in HTML 😄 with 
-//something like document.querySelector('.move').innerHTML = ...
+const director = myMovie.getDirector();
+
+console.log(`Director: ${director.getName()}`);
+
+console.log(`${myMovie.getTitle()} movie has scored an average of: ${(myMovie.getAverageRating()).toFixed(1)} scores on IMDB.`);
