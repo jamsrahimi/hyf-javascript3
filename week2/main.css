@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: block;
+  background: url("https://mahmutkaya.github.io/hyf-javascript3/week2/images/hyf.svg") top;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position-y: -3em;
+}
+#header {
+  margin-top: 7.5%;
+  width: 100%;
+}
+#input {
+    width: 35%;
+    text-align: center;
+    padding: 10px 10px;
+}
+
+input, button {
+  font-size: 1.6em;
+  border: 2px solid black;
+  border-radius: 2px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+li{
+  list-style: none;
+}
+
