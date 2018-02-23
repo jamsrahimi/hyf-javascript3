@@ -7,30 +7,45 @@
 // div.id = 'main';
 // document.body.appendChild(div);
 
-
-document.getElementById('button').addEventListener('click', loadRepos);
+//Question 1-5:
+document.getElementById('button1').addEventListener('click', loadRepos);
 function loadRepos() {
     console.log('You clicked me!');
-    let xhr = new XMLHttpRequest();
+    let xhrGetRepos = new XMLHttpRequest();
     //    console.log(xhr);
-    xhr.open('GET', 'https://api.github.com/orgs/HackYourFuture/repos', true);
-    xhr.onload = function () {
+    xhrGetRepos.open('GET', 'https://api.github.com/orgs/HackYourFuture/repos', true);
+    xhrGetRepos.onload = function () {
         if (this.status == 200) {
             let repos = JSON.parse(this.responseText);
             let repoNames = "";
             for (let i in repos) {
                 repoNames +=
-                    '<div class="namesOnly">' +
+                    // '<div class="namesOnly">' +
                     '<ul>' + '<li>' + repos[i].name + '</li>' +
-                    '</ul>' +
-                    '</div>';
-    }
-            document.getElementById('text').innerHTML = repoNames;
+                    '</ul>';
+                // '</div>';
+            }
+            document.getElementById('div1').innerHTML = repoNames;
             // console.log(repos);
         }
     }
-    xhr.send();
-
+    xhrGetRepos.send();
 }
 
-//for (let i in )
+//Question 6-9:
+document.getElementById('button2').addEventListener("click", aRepo);
+function aRepo() {
+
+    let xhrARepo = new XMLHttpRequest();
+    xhrARepo.open("GET", 'https://api.github.com/repos/HackYourFuture/' + document.getElementById('input').value, true);
+
+    xhrARepo.onload = function () {
+        let loadedRepo = JSON.parse(xhrARepo.responseText);
+        console.log(loadedRepo);
+        let repoName = "";
+        repoName += '<ul>' + '<li><a target="_blank" href=' + loadedRepo.html_url + '>' + loadedRepo.name + '</a></li>' + '</ul>';
+        document.getElementById('div2').innerHTML = "";
+        document.getElementById('div2').innerHTML = repoName;
+    }
+    xhrARepo.send();
+}

@@ -28,4 +28,10 @@ input, button {
 li{
   list-style: none;
 }
-
+#div1{ 
+  display: block;
+  float: left;
+} 
+#div2{
+  font-size: 3em;
+}
