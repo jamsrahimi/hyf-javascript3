@@ -28,10 +28,28 @@ input, button {
 li{
   list-style: none;
 }
-#div1{ 
-  display: block;
-  float: left;
-} 
+#div1,.namesOnly{ 
+  display: inline-block;
+position: absolute;
+left: 0;
+top:0;
+  /* float: left; */
+}
+
 #div2{
   font-size: 3em;
+}
+
+img  { 
+    width: 200px;
+    border-radius: 4%;
+}
+#div3{
+    display: block;
+position: relative;
+right: 0;
+top:0;
+}
+#div3 ul li{
+  display: inline-block;
 }

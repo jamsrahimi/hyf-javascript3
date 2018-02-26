@@ -37,15 +37,33 @@ document.getElementById('button2').addEventListener("click", aRepo);
 function aRepo() {
 
     let xhrARepo = new XMLHttpRequest();
+
+    let xhrContributor = new XMLHttpRequest();
     xhrARepo.open("GET", 'https://api.github.com/repos/HackYourFuture/' + document.getElementById('input').value, true);
 
+    xhrContributor.open("GET", 'https://api.github.com/repos/HackYourFuture/' + document.getElementById('input').value + '/contributors', true);
+
     xhrARepo.onload = function () {
-        let loadedRepo = JSON.parse(xhrARepo.responseText);
+        const loadedRepo = JSON.parse(xhrARepo.responseText);
+
+        const loadedContributors = JSON.parse(xhrContributor.responseText);
+
         console.log(loadedRepo);
+        console.log(loadedContributors.login);
         let repoName = "";
         repoName += '<ul>' + '<li><a target="_blank" href=' + loadedRepo.html_url + '>' + loadedRepo.name + '</a></li>' + '</ul>';
         document.getElementById('div2').innerHTML = "";
         document.getElementById('div2').innerHTML = repoName;
+        let contributor = "";
+        loadedContributors.forEach(element => {
+            console.log(element.login);
+
+            contributor += '<ul>' + '<li><a target="_blank" href=' + element.html_url + '>'
+                + element.login + '<img src="' + element.avatar_url + "'>" + '</a></li>' + '</ul>';
+            document.getElementById('div3').innerHTML = contributor;
+        });
     }
+    xhrContributor.send();
     xhrARepo.send();
+
 }
