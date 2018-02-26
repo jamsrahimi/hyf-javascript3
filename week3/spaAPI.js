@@ -1,11 +1,4 @@
 'use strict'
-// const h1 = document.createElement('h1');
-// document.body.appendChild(h1);
-// h1.innerHTML = 'HYF Repository';
-
-// const div = document.createElement('div');
-// div.id = 'main';
-// document.body.appendChild(div);
 
 //Question 1-5:
 document.getElementById('button1').addEventListener('click', loadRepos);
