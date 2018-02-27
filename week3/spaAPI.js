@@ -1,11 +1,10 @@
 'use strict'
 
-//Question 1-5:
 document.getElementById('button1').addEventListener('click', loadRepos);
 function loadRepos() {
     console.log('You clicked me!');
     let xhrGetRepos = new XMLHttpRequest();
-    //    console.log(xhr);
+
     xhrGetRepos.open('GET', 'https://api.github.com/orgs/HackYourFuture/repos', true);
     xhrGetRepos.onload = function () {
         if (this.status == 200) {
@@ -50,8 +49,8 @@ function aRepo() {
         let contributor = "";
         loadedContributors.forEach(element => {
             console.log(element.login);
-
-            contributor += '<ul>' + '<li><a target="_blank" href=' + element.html_url + '>'
+            
+            contributor += '<ul>' + "<li><a target='_blank' href='" + element.html_url + "'>"
                 + element.login + '<img src="' + element.avatar_url + "'>" + '</a></li>' + '</ul>';
             document.getElementById('div3').innerHTML = contributor;
         });

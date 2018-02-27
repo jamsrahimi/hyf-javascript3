@@ -49,8 +49,8 @@ function aRepo() {
         let contributor = "";
         loadedContributors.forEach(element => {
             console.log(element.login);
-
-            contributor += '<ul>' + '<li><a target="_blank" href=' + element.html_url + '>'
+            
+            contributor += '<ul>' + "<li><a target='_blank' href='" + element.html_url + "'>"
                 + element.login + '<img src="' + element.avatar_url + "'>" + '</a></li>' + '</ul>';
             document.getElementById('div3').innerHTML = contributor;
         });
