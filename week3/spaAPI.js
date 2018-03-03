@@ -1,61 +1,63 @@
 'use strict'
 
-document.getElementById('button1').addEventListener('click', loadRepos);
-function loadRepos() {
+//ref: https://www.youtube.com/watch?v=82hnvUYY6QA
+
+document.getElementById('button1').addEventListener('click', () => {
     console.log('You clicked me!');
-    let xhrGetRepos = new XMLHttpRequest();
+    const xhrGetRepos = new XMLHttpRequest();
 
     xhrGetRepos.open('GET', 'https://api.github.com/orgs/HackYourFuture/repos', true);
-    xhrGetRepos.onload = function () {
-        if (this.status == 200) {
-            let repos = JSON.parse(this.responseText);
+    xhrGetRepos.onload = ()=> {
+        if (this.status === 200) {
+            const repos = JSON.parse(this.responseText);
             let repoNames = "";
-            for (let i in repos) {
+            for (const i in repos) {
                 repoNames +=
-                    // '<div class="namesOnly">' +
                     '<ul>' + '<li>' + repos[i].name + '</li>' +
                     '</ul>';
-                // '</div>';
             }
             document.getElementById('div1').innerHTML = repoNames;
-            // console.log(repos);
         }
-    }
+    };
     xhrGetRepos.send();
-}
+});
 
 //Question 6-9:
-document.getElementById('button2').addEventListener("click", aRepo);
-function aRepo() {
+document.getElementById('button2').addEventListener("click", () => {
+    return new Promise((resolve, reject) => {
+        const xhrARepo = new XMLHttpRequest();
 
-    let xhrARepo = new XMLHttpRequest();
+        const xhrContributor = new XMLHttpRequest();
+        xhrARepo.open("GET", 'https://api.github.com/repos/HackYourFuture/' + document.getElementById('input').value, true);
 
-    let xhrContributor = new XMLHttpRequest();
-    xhrARepo.open("GET", 'https://api.github.com/repos/HackYourFuture/' + document.getElementById('input').value, true);
+        xhrContributor.open("GET", 'https://api.github.com/repos/HackYourFuture/' + document.getElementById('input').value + '/contributors', true);
 
-    xhrContributor.open("GET", 'https://api.github.com/repos/HackYourFuture/' + document.getElementById('input').value + '/contributors', true);
+        xhrARepo.onload =  ()=> {
+            if (xhrARepo.status < 400) {
+                resolve(xhrARepo.response);
+            } else {
+                reject(new Error(xhrARepo.statusText));
+            }
+            const loadedRepo = JSON.parse(xhrARepo.responseText);
 
-    xhrARepo.onload = function () {
-        const loadedRepo = JSON.parse(xhrARepo.responseText);
+            const loadedContributors = JSON.parse(xhrContributor.responseText);
 
-        const loadedContributors = JSON.parse(xhrContributor.responseText);
+            let repoName = "";
+            repoName += '<ul>' + '<li><a target="_blank" href=' + loadedRepo.html_url + '>' + loadedRepo.name + '</a></li>' + '</ul>';
+            document.getElementById('div2').innerHTML = "";
+            document.getElementById('div2').innerHTML = repoName;
+            let contributor = "";
+            loadedContributors.forEach(element => {
+                console.log(element.login);
+                contributor += '<ul>' + "<li><a target='_blank' href='" + element.html_url + "'>"
+                    + element.login + '<img src="' + element.avatar_url + "'>" + '</a></li>' + '</ul>';
+                document.getElementById('div3').innerHTML = contributor;
+            });
+        };
+        xhrContributor.send();
+        xhrContributor.onerror = () => reject(new Error(xhrContributor.statusText));
 
-        console.log(loadedRepo);
-        console.log(loadedContributors.login);
-        let repoName = "";
-        repoName += '<ul>' + '<li><a target="_blank" href=' + loadedRepo.html_url + '>' + loadedRepo.name + '</a></li>' + '</ul>';
-        document.getElementById('div2').innerHTML = "";
-        document.getElementById('div2').innerHTML = repoName;
-        let contributor = "";
-        loadedContributors.forEach(element => {
-            console.log(element.login);
-            
-            contributor += '<ul>' + "<li><a target='_blank' href='" + element.html_url + "'>"
-                + element.login + '<img src="' + element.avatar_url + "'>" + '</a></li>' + '</ul>';
-            document.getElementById('div3').innerHTML = contributor;
-        });
-    }
-    xhrContributor.send();
-    xhrARepo.send();
-
-}
+        xhrARepo.send();
+        xhrARepo.onerror = () => reject(new Error(xhrARepo.statusText));
+    });
+});

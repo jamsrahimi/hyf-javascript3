@@ -35,4 +35,3 @@ console.log(smartPhones.map(
     smartPhone => smartPhone.price, smartPhones.name));
       
 //aAsync().then( ()=> bAsync()).then(()=>cAsync()).done(()=> finish());
-
